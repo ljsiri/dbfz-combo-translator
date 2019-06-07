@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>DBFZ Button translator</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="stylesheet" href="css/console-buttons.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            #combo_buttons, .unifier{
+                display: inline;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .console-btn{
+                display: inline;
+                width: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron text-center">
+                <h1>DBFZ combos</h1>
+                <p>
+                    Get the combos from the community spreadsheet:
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vStxd3co41pIsJuRt98kl_EQDaAxjHnHP1y76kzU8018Wv_MAhYUqV7ATyTWUkGddxMJQSt-05vbDL_/pubhtml#"
+                   target="new">here</a> 
+                </p>
+                
+
+                <div class="input-group mb-3">
+                    <input id="combo-inputs" type="text" class="form-control" placeholder="Type Inputs" aria-label="Type Inputs" aria-describedby="input_c">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary dropdown-toggle btn-sel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fab fa-playstation"></i><!-- PS4 by default -->
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item sys-sel sys-selected" data-system="PS4" href="#" title="PlayStation">
+                                <i class="fab fa-playstation"></i>
+                            </a>
+                            <a class="dropdown-item sys-sel" data-system="XBOX" href="#" title="X-Box">
+                                <i class="fab fa-xbox"></i>
+                            </a>
+                            <a class="dropdown-item sys-sel" data-system="SWITCH" href="#" title="Nintendo">
+                                <i class="fa fa-gamepad"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" id="input_c">                            
+                            Translate
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="combo_buttons" class="col-12">
+                    
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/popper.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="js/translation.js"></script>        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".sys-sel").click(function () {
+                    $(".sys-sel").removeClass("sys-selected");
+
+                    $(this).addClass("sys-selected");
+                    $(".btn-sel").html($(this).html());
+                });
+
+                $("#input_c").click(function () {
+                    var combo_inp = $("#combo-inputs").val(),
+                            system = $('.sys-selected').data('system'),
+                            combo_arr = combo_inp.split('>'),
+                            combo = '';
+
+                    if (system === undefined) {
+                        alert("Please select a system!");
+                        return;
+                    }
+
+                    var cmax = combo_arr.length, c_c = 1;
+
+                    $.each(combo_arr, function (i, block) {
+                        var c = block.trim(), c_block = c;
+                        var max = Object.keys(inputs[system]).length, cnt = 1;
+
+                        console.log(c, max);
+
+                        $.each(inputs[system], function (key, seq) {
+                            var btn_r = key.split('='), btn = btn_r[1];
+                            c_block = c_block.replaceAll(btn, '+' + seq);
+
+                            if (cnt === max) {
+                                console.log(c_block);
+                                combo += '&'+c_block;
+                            } else {
+                                cnt++;
+                            }
+                        });
+
+                        if (c_c === cmax) {//there is a better way, i know... i'm just too lazy 
+                            translate_c(combo, system);
+                        } else {
+                            c_c++;
+                        }
+                    });
+                });
+            });
+
+            function translate_c(combo, system) {
+                var temp = combo,
+                        mmax = Object.keys(mapping[system]).length, cnt = 1;
+
+                $.each(mapping[system], function (map, btn) {
+                    temp = temp.replaceAll(map, btn);
+
+                    if (cnt === mmax) {
+                        $("#combo_buttons").html(temp);
+                    } else {
+                        cnt++;
+                    }
+                });
+            }
+
+            String.prototype.replaceAll = function (search, replacement) {
+                var target = this;
+                return target.split(search).join(replacement);
+            };
+        </script>        
+    </body>
+</html>
