@@ -55,7 +55,7 @@ var inputs = {
         "24=H":"circle",
         "25=S":"cross"
     }
-};
+};//Had to use numbers and a separator for the index, javascript insisted on ignoring the order given and ordering by key.
 
 var mapping = {
     "PS4":{
