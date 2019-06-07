@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>DBFZ Button translator</title>
@@ -95,8 +90,6 @@ and open the template in the editor.
                     $.each(combo_arr, function (i, block) {
                         var c = block.trim(), c_block = c;
                         var max = Object.keys(inputs[system]).length, cnt = 1;
-
-                        console.log(c, max);
 
                         $.each(inputs[system], function (key, seq) {
                             var btn_r = key.split('='), btn = btn_r[1];
