@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
         <title>DBFZ Button translator</title>
@@ -37,13 +42,13 @@
                             <i class="fab fa-playstation"></i><!-- PS4 by default -->
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item sys-sel sys-selected" data-system="PS4" href="#" title="PlayStation">
+                            <a class="dropdown-item sys-sel sys-selected" data-system="PS4" href="#" title="PlayStation 4">
                                 <i class="fab fa-playstation"></i>
                             </a>
-                            <a class="dropdown-item sys-sel" data-system="XBOX" href="#" title="X-Box">
+                            <a class="dropdown-item sys-sel" data-system="XBOX" href="#" title="X-Box One">
                                 <i class="fab fa-xbox"></i>
                             </a>
-                            <a class="dropdown-item sys-sel" data-system="SWITCH" href="#" title="Nintendo">
+                            <a class="dropdown-item sys-sel" data-system="SWITCH" href="#" title="Nintendo Switch">
                                 <i class="fa fa-gamepad"></i>
                             </a>
                         </div>
@@ -54,6 +59,8 @@
                         </button>
                     </div>
                 </div>
+                
+                <div class="float-right"><a href="https://github.com/ljsiri/dbfz-combo-translator" target="new"><img src="images/GitHub-Mark-64px.png" style="width: 20px"></a></div>
             </div>
             <div class="row">
                 <div id="combo_buttons" class="col-12">
@@ -64,7 +71,7 @@
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/popper.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>        
-        <script type="text/javascript" src="js/translation.js"></script>        
+        <script type="text/javascript" src="js/translation_2.js"></script>        
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".sys-sel").click(function () {
@@ -89,9 +96,12 @@
 
                     $.each(combo_arr, function (i, block) {
                         var c = block.trim(), c_block = c;
-                        var max = Object.keys(inputs[system]).length, cnt = 1;
+                        //var max = Object.keys(inputs[system]).length, cnt = 1;
+                        var max = Object.keys(inputs).length, cnt = 1;
 
-                        $.each(inputs[system], function (key, seq) {
+                        //console.log(c, max);
+
+                        $.each(inputs, function (key, seq) {
                             var btn_r = key.split('='), btn = btn_r[1];
                             c_block = c_block.replaceAll(btn, '+' + seq);
 
